@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    @Override
     Button buttonadd;
     RecyclerView RecyclerView;
     EditText editTextAdd;
+    @Override
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
         editTextAdd=findViewById(R.id.editTextTextEntered);
 
-        final List<String> toDoList = new ArrayList<>();
+        final ArrayList<String> toDoList = new ArrayList<>();
         toDoList.add("Buy Milk");
         toDoList.add("Send postage");
         toDoList.add("Buy Android development book");
 
         RecyclerView=findViewById(R.id.recyclerView);
-        BrandAdapter mAdapter =
+        final BrandAdapter mAdapter =
                 new BrandAdapter(toDoList);
 
         LinearLayoutManager mLayoutManager =
@@ -43,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.setLayoutManager(mLayoutManager);
         RecyclerView.setItemAnimator(new DefaultItemAnimator());
         RecyclerView.setAdapter(mAdapter);
+
+        buttonadd.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                toDoList.add(editTextAdd.getText().toString());
+                mAdapter.notifyDataSetChanged();
+            }
+        });
 
 
     }
